@@ -1,3 +1,12 @@
 .table-of-contents__link--active {
   font-weight: 600;
 }
+
+[class^="tableOfContents_"] {
+  code {
+    padding: 0;
+    background: none;
+    border: 0;
+    font-size: 1em;
+  }
+}

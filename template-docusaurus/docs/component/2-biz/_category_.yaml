@@ -1,5 +1,4 @@
 label: 业务组件
-collapsible: false
 link:
   slug: /component/biz
   type: generated-index
