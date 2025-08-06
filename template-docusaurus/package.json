@@ -1,6 +1,6 @@
 {
   "name": "template-docusaurus",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "A docusaurus template with minor tuning based on the official one.",
   "keywords": [],
   "license": "MIT",
@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/justnewbee/templates.git"
   },
-  "homepage": "https://github.com/justnewbee/templates",
+  "homepage": "https://github.com/justnewbee/templates/template-docusaurus",
   "bugs": "https://github.com/justnewbee/templates/issues",
   "author": {
     "name": "Jianchun Wang",
