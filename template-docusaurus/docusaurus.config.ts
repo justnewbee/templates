@@ -103,7 +103,7 @@ export default {
       title: 'MyDoc',
       logo: {
         alt: 'Logo',
-        src: '/img/logo@2x.png'
+        src: '/img/logo.png'
       },
       items: [{
         label: 'Guide',
