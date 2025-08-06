@@ -1,0 +1,6 @@
+label: 业务组件
+collapsible: false
+link:
+  slug: /component/biz
+  type: generated-index
+  description: 与业务息息相关的组件，一般会主动调用相关的 API。

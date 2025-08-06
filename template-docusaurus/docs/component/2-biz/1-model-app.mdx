@@ -1,0 +1,239 @@
+---
+title: ModelApp 顶层容器
+---
+
+<PkgBrief name="ModelApp" pkg="@xx/model-app">
+  全局唯一，应用的顶层容器，用于维护全局性的登录信息、租户信息等。
+</PkgBrief>
+
+## 为什么
+
+用户的登录信息可以动态变化，这些信息本身会被存储在 `localStorage` 中。而界面上会有用户信息的展示，这些信息不能直接依赖于相对静态的 `localStorage`，否则将无法自动更新。
+
+因此，我们需要有一个顶层的容器，用以检测这些信息的动态变化，以保证界面能够准确反映当前的状态。
+
+你可以将 `ModelApp` 看做是这部分存在 `localStorage` 的用户信息的实时镜像。
+
+### 很重要，但又不重要
+
+> `ModelApp` 既非常重要有非常不重要。
+
+这看起来很矛盾，但却是真的。
+
+首先，如果没有 `ModelApp` 整个应用将跑步起来，因为一些模块用到了它提供的 Hook。
+
+其次，说它不重要，是因为整个应用中，只有顶栏中和用户设置页面会用到它，别的业务逻辑完全可以忽略它。
+
+## 何时使用
+
+应用顶层，真全局唯一。
+
+## Examples / 代码演示
+
+### 应用层级
+
+```tsx
+<ModelApp>
+  <App />
+</ModelApp>
+```
+
+### 函数式 Dialog
+
+:::note
+`@xx/helper-op` 提供的 `opFromDialog` 和 `opFromDialogWithForm` 已经做了相应的封装，能够解决 90% 以上需要使用 `Dialog` 的场景，使你能够只需要关注业务代码的 Happy Path，推荐使用。
+:::
+
+若 `DialogContent` 内有 Antd 组件，则一般需要裹一层：
+
+```tsx
+import {
+  open
+} from '@xx/fork-console-base-dialog';
+
+open({
+  title: '弹窗标题',
+  content: <ModelApp>
+    <DialogContent />
+  </ModelApp>
+});
+```
+
+### 切换暗色主题
+
+默认为亮色，如果应用需要暗色主题，则需自己维护是否暗色的状态，一般推荐的是有一个最顶层的 `ModelApp`（即一个 React `Context.Provider`）用以维护此状态。
+
+应用可以在需要的地方通过 `postMessage` 的方式通知页面所有的 `ModelApp` 动态切换主题，同时我们还在内部维护了一个状态，用以后续新建的 `ModelApp` 能够在第一时间渲染正确的主题。
+
+```ts
+window.postMessage({
+  type: 'toggle-theme-dark',
+  payload // true | false
+});
+```
+
+## API Reference
+
+### Import
+
+```tsx
+import ModelApp from '@xx/model-app';
+```
+
+### Hooks
+
+#### useLoginInfo 登录信息
+
+获取当前登录账号信息。
+
+```ts
+/**
+ * 登录账号信息
+ */
+interface LoginInfo {
+  id: string; // 账号 ID
+  nickname: string; // 用户名
+  name: string; // 真实姓名
+  mobile: string; // 手机号
+  avatar: string; // 头像 URL
+  tenantId: string; // 租户 ID
+  tenantName: string; // 租户名
+  role: string; // 租户角色 ID
+  token: string; // 登录 Token
+  tokenExpired: number; // 登录 Token 失效时间戳
+  invitationCode: string; // 用户邀请码
+  // 以上信息记录在 localStorage 中，以下为计算值
+  login: boolean; // 是否登录，计算值，根据 token 和 loginExpired
+  loginExpired: boolean; // 是否登录失效，计算值，根据 tokenExpired
+}
+
+function useLoginInfo(): LoginInfo;
+```
+
+#### useMemberInfo 会员信息
+
+获取当前登录账号的会员信息。
+
+```ts
+/**
+ * 登录账号信息
+ */
+interface MemberInfo {
+  type: MemberType; // 账号类型
+  days: number; // 当前账号类型的总天数
+  daysLeft: number; // 当前账号类型的剩余天数
+  // 一般我们只需要用以上三个信息即可，以下为详情
+  vipDetails: { // VIP 详情
+    status: MemberVipStatus;
+    days: number;
+    daysLeft: number;
+  };
+  svipDetails: { // SVIP 详情
+    status: MemberVipStatus;
+    days: number;
+    daysLeft: number;
+  };
+}
+
+function useMemberInfo(): MemberInfo | null;
+```
+
+#### useTenantList 租户列表
+
+获取当前登录账号的租户列表。
+
+```ts
+interface DataTenant {
+  id: string; // 租户 ID
+  name: string; // 租户名称
+  locked: boolean; // 是否被锁定（锁定后不可用）
+  authStatus: TenantAuthStatus; // 租户认证状态
+  accountCount: number; // 账号数量（目前无用）
+  contactName: string; // 联系人姓名
+  contactMobile: string; // 联系人电话
+}
+
+function useTenantList(): DataTenant[]
+```
+
+#### useHandleFetchMemberInfo 获取会员信息
+
+`ModelApp` 会在用户登录的情况下自动调用此 Hook 以刷新用户的会员信息，应用需在以下情况主动调用此 Hook：
+
+* 购买 VIP / SVIP
+
+```ts
+function useHandleFetchMemberInfo(): () => void;
+```
+
+#### useHandleFetchTenantList 获取租户列表
+
+`ModelApp` 会在用户登录的情况下自动调用此 Hook 以刷新用户的租户列表，应用需在以下情况主动调用此 Hook：
+
+* 创建新的租户成功
+* 加入租户成功
+
+```ts
+function useHandleFetchTenantList(): () => Promise<void>;
+```
+
+#### useHandleUpdateAccountAvatar 更新头像
+
+应用主动调用。修改头像，选择图片文件，此 Hook 会负责上传并更新 `LoginInfo`。
+
+```ts
+function useHandleUpdateAccountAvatar(): (file: File) => Promise<void>;
+```
+
+#### useHandleUpdateAccountMobile 更新电话
+
+应用主动调用。表单收集必要信息后，此 Hook 负责调用更新接口，并在完成后更新本地数据。
+
+```ts
+function useHandleUpdateAccountMobile(): (mobile: string, captcha: string) => Promise<void>;
+```
+
+#### useHandleUpdateAccountNickname 更新昵称
+
+应用主动调用。表单收集必要信息后，此 Hook 负责调用更新接口，并在完成后更新本地数据。
+
+```ts
+function useHandleUpdateAccountNickname(): (nickname: string) => Promise<void>;
+```
+
+#### useHandleUpdateAccountName 更新姓名
+
+应用主动调用。表单收集必要信息后，此 Hook 负责调用更新接口，并在完成后更新本地数据。
+
+```ts
+function useHandleUpdateAccountName(): (name: string) => Promise<void>;
+```
+
+#### useHandleSwitchTenant 切换租户
+
+应用主动调用。根据选中的租户（下拉列表）切换至新的租户，切换后页面全局刷新。
+
+```ts
+function useHandleSwitchTenant(): (tenantId: string, tenantName: string) => Promise<void>;
+```
+
+#### useHandleLogout 登出
+
+```ts
+function useHandleLogout(): () => Promise<void>;
+```
+
+## FAQ
+
+### 为什么使用 Hook 而不直接从 `localStorage` 获取信息？
+
+因为从 `localStorage` 获取，只会在获取的那一瞬间有效，后续的数据更新（比如用户修改头像、昵称、乃至登出等）都不会及时反映到界面上。
+
+### 所有的 UI 都必须使用 ModalApp 提供的 Hook 吗？
+
+不是。如果你正在用 `Dialog` 封装用户操作，则不要用 Hook（用了反而会报错，因为他们不在同一棵 React DOM 树下），甚至不推荐你在调用处将 Hook 得到的数据通过参数的形式传递。
+
+### 命令式的 `Dialog` 如果需要用户信息、会员信息，不用 Hook 怎么办？
+
+* 用户信息用 `@xx/helper-login` 提供的帮助方法
+* 会员信息用 `@xx/data-member` 自行获取

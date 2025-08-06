@@ -1,0 +1,6 @@
+label: 通用组件
+collapsible: false
+link:
+  slug: /component/base
+  type: generated-index
+  description: 与业务无关的组件。

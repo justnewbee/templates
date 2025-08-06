@@ -1,0 +1,114 @@
+---
+title: 📦 @xx/data-login
+---
+
+<PkgBrief name="dataLogin.." named pkg="@xx/data-login">
+  登录相关接口，使用 `@xx/fetcher-base`。
+</PkgBrief>
+
+## API
+
+### `dataLoginQr`
+
+获取登录二维码信息。
+
+```ts
+function dataLoginQr(): Promise<DataLoginQr>;
+```
+
+### `dataLoginSendCaptcha`
+
+发送登录验证码。
+
+:::warning
+注意测试服务器上不会真正发送（统一用 `6789` 即可），但需要操作一次，否则会说验证码已过期。
+:::
+
+```ts
+function dataLoginSendCaptcha(mobile: string): Promise<void>;
+```
+
+### `dataLoginByMobile`
+
+手机号 + 验证码登录。
+
+```ts
+function dataLoginByMobile(mobile: string, captcha: string): Promise<DataLogin>;
+```
+
+### `dataLoginByQr`
+
+小程序码登录查询，用户使用小程序扫 PC 的二维码进行登录，PC 端使用此接口进行轮询，若返回 `DataLogin` 对象，则表示登录成功。
+
+```ts
+function dataLoginByQr(tempUid: string): Promise<DataLogin | null>;
+```
+
+### `dataLoginBySsoToken`
+
+使用 SSO Token 登录，`ssoToken` 为三方站点拼接了 `__ssoToken` 的本站地址，跳转过来后会在 `ModelApp` 进行拦截并执行 SSO 登录。
+
+```ts
+function dataLoginBySsoToken(ssoToken: string): Promise<DataLogin>;
+```
+
+### `dataLoginProfile`
+
+:::warning[业务层一般不调用此接口]
+此接口其实是登录成功后的接口，因为数据包封装了登录 + 获取用户信息的过程，所以封装了带参数的方法。
+:::
+
+```ts
+function dataLoginProfile(tenantId: string, token: string): Promise<DataLoginProfile>;
+```
+
+## 类型
+
+### `DataLoginQr`
+
+二维码信息。
+
+```ts
+interface DataLoginQr {
+  tempUid: string;
+  qr: string;
+}
+```
+
+### `DataLoginAuth`
+
+用户登录信息。
+
+```ts
+interface DataLoginAuth {
+  id: string;
+  tenantId: string;
+  token: string;
+  tokenRefresh: string;
+  tokenExpired: number;
+}
+```
+
+### `DataLoginProfile`
+
+用户信息。
+
+```ts
+interface DataLoginProfile {
+  name: string;
+  nickname: string;
+  avatar: string;
+  mobile: string;
+  tenantId: string;
+  role: string;
+  invitationCode: string;
+}
+```
+
+### `DataLogin`
+
+登录过程包裹验证和获取用户信息，登录完成后业务层将获取到完整的用户信息。
+
+```ts
+interface DataLogin extends DataLoginAuth, DataLoginProfile {}
+```

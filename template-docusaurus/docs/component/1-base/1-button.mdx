@@ -1,0 +1,225 @@
+---
+title: Button 按钮
+---
+
+<PkgBrief name="Button" named pkg="@xx/antd-x">
+  Antd 的 Button 实在太难用了，因此做了封装。
+</PkgBrief>
+
+## Live Demo
+
+```tsx live
+<div>
+  <p>由于我们并未在 <code>src/theme/ReactLiveScope/index.ts</code> 中注入 <code>Button</code>，本文档中的 Live Block 不可能渲染成功。<br />这里给一个简单的例子，已验证 Live 可行。</p>
+  <button onClick={() => alert('Hello')}>原生按钮</button>
+</div>
+```
+
+```tsx live
+<Button {...{
+  type: 'default', // primary default text link text-pure link-pure
+  label: 'Button Label'
+}} />
+```
+
+## 为什么
+
+### 解决 Antd 的难用
+
+Antd 的 `Button` 难用不止一点点：
+
+* 文字按钮依然有大小
+  + `type: text` 和 `type: link` 的按钮还是有大小（`height`、`padding`）
+  + `type: text` Hover 有背景色
+* 防不胜防的边框
+  + 无边框的按钮（`variant: filled + color: default`）在 `disabled` 时候，会有边框，导致显式突兀
+  + `disabled + color: primary + variant: filled` 会变成 `ant-btn-variant-solid` 导致没法 Hack `disabled` 边框
+  + `variant: filled` 必须搭配 `color: default` 否则就是边框
+* 链接按钮无脑渲染
+  + 即使 `href: ''`，依然会渲染成链接
+  + `disabled + href` 还是会渲染成链接，并且无法 Hack `disabled` 边框
+  + 外链没有自动 `target="_blank"`
+* 画蛇添足
+  + 两个汉字中间默认加空格，将导致自动化测试失败
+
+### 增加常用的功能
+
+* 新增 `tooltip`
+* 新增 `confirm`
+
+## 何时使用
+
+任何 `import { Button } from 'antd';` 都可以改成 `import { Button } from '@xx/antd-x';`
+
+## Examples / 代码演示
+
+### 真·文字 / 链接
+
+```tsx live
+<>
+  <div>
+    真正的 <Button {...{
+      type: 'text-pure',
+      label: '真文字'
+    }} /> 按钮，或  <Button {...{
+      type: 'link-pure',
+      label: '真链接'
+    }} /> 按钮，可以和周边的文字放一起，而不违和。
+  </div>
+  <div>
+    而 Antd 的 <Button {...{
+      type: 'text',
+      label: '假文字'
+    }} />、<Button {...{
+      type: 'link',
+      label: '假链接'
+    }} />，却不能。
+  </div>
+</>
+```
+
+### Tooltip 便利
+
+你不再需要引 `Tooltip` 或 `Popup` 对 `Button` 进行包裹，在这里，`tooltip` 仅仅只是一个属性而已。
+
+Antd 提供了功能相近的 `Popup`（白底）、`Tooltip`（黑底），我非常不能理解这种行为。想必用户也无法理解为何要有这种不一致。
+大部分情况，`Tooltip` 都是 `title` 属性的替代品；剩下就是在 Tooltip 中承载功能的场景，比如在里边渲染一个表单什么的。
+
+:::warning
+出于一致性考虑，这里封装的 `tooltip` 其实用的是 `Popup`（只有白底）。
+:::
+
+```tsx live
+<>
+  <Button {...{
+    tooltip: '我的 tooltip 是一个简单的字符串，属于 title 的替代品',
+    label: '字符串 Tooltip'
+  }} />
+  &nbsp;
+  <Button {...{
+    tooltip: <div>我的 <span style={{ color: '#f00' }}>tooltip</span> 是 JSX，能承载更多功能</div>,
+    label: 'JSX Tooltip'
+  }} />
+  &nbsp;
+  <Button {...{
+    tooltip: {
+      title: 'Tooltip 标题',
+      content: '我的 tooltip 是一个对象，能做更多的自定义',
+      placement: 'rightBottom'
+    },
+    label: '更多自定义 Tooltip'
+  }} />
+</>
+```
+
+### Confirm 便利
+
+你不再需要引入 `Popconfirm` 或者 `Dialog`，而且 `onClick` 永远就是你要的最终点击的回调。
+
+:::warning
+由于 React 的 Event 是 [Synthetic Event](https://react.dev/reference/react-dom/components/common#react-event-object)，而使用了 `confirm` 后，`Button`
+的 `onClick` 执行不再是同步执行，因此原有的 `onClick(e: MouseEvent)` 将变成无参的 `onClick()`。
+:::
+
+```tsx live
+<>
+  <Button {...{
+    confirm: '真的要点我吗？',
+    label: '字符串 Confirm',
+    onClick: () => console.info('💥 Clicked: 字符串 Confirm')
+  }} />
+  &nbsp;
+  <Button {...{
+    confirm: <div>我的 <span style={{ color: '#f00' }}>confirm</span> 是 JSX，能承载更多功能</div>,
+    label: 'JSX Confirm',
+    onClick: () => console.info('💥 Clicked: 字符串 Confirm')
+  }} />
+  &nbsp;
+  <Button {...{
+    confirm: {
+      title: 'Confirm 标题',
+      message: '我的 tooltip 是一个对象，能做更多的自定义',
+      placement: 'rightTop',
+      labelConfirm: '我确定了',
+      labelCancel: '我不确定',
+      inline: false // 默认 true
+    },
+    label: '更多自定义 Confirm'
+  }} />
+</>
+```
+
+## API Reference
+
+### Import
+
+```tsx
+import {
+  Button,
+  ButtonRef,
+  ButtonProps
+} from '@xx/antd-x';
+```
+
+### Props
+
+继承 Antd [ButtonProps](https://ant.design/components/button-cn/#api)。
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| `type` | `"link" \| "text" \| "default" \| "primary" \| "dashed" \| "text-pure" \| "link-pure"` | 扩展 Antd Button 的 `type`（它的语法「毒」糖），新增 `text-pure` 和 `link-pure` |
+| `label` | `string \| ReactElement` | 建议用 `label` 代替 `children |
+| `tooltip` | `string \| ReactElement \| ButtonTooltip` | 以属性代替繁琐的 `Tooltip` 或 `Popover` 包裹，组件内部将统一使用 `Tooltip`，避免有些地方黑，有些地方白的不一致 |
+| `confirm` | `string \| ReactElement \| ButtonConfirm` | 以属性代替繁琐的 `Popconfirm` 包裹，或使用 `confirm` 对 `onClick` 进行前置拦截 |
+| `clickPrevent` | `boolean` | 由于 `onClick` 已是无参回调，想 `e.preventDefault()` 的，用这个属性 |
+| `clickStop` | `boolean` | 由于 `onClick` 已是无参回调，想 `e.stopPropagation()` 的，用这个属性 |
+
+#### ButtonTooltip
+
+就是 Antd [PopoverProps](https://ant.design/components/popover-cn/#api)。
+
+#### ButtonConfirm
+
+```ts
+interface ButtonConfirm {
+  inline?: boolean; // 默认 true，设置 false 可弹窗确认
+  title?: string | ReactElement;
+  message: string | ReactElement; // 必须有，没有则不展示
+  labelCancel?: string; // 自定义「取消」按钮文字
+  labelConfirm?: string; // 自定义「确定」按钮文字
+  placement?: PopconfirmProps['placement'];
+}
+```
+
+### Events
+
+| 事件 | 类型 | 说明 |
+| --- | --- | --- |
+| `onClick` | `() => void \| Promise<unknown>` | 由于 `confirm` 会把 `onClick` 异步化，`onClick` 变成了无参回调，不再有 Event 对象；若返回的是 `Promise` 对象，则会在 `confirm` 的确认按钮处显示 Loading 状态 |
+
+### Data Attributes
+
+| 属性 | 说明 |
+| --- | --- |
+| `[data-button-type]` <TagReadonly /> | 组件内部用来做样式覆盖的 |
+
+## FAQ
+
+### 是否 tooltip 和 confirm 可以同时存在？
+
+可以。
+
+两者并不冲突，但，尽量不要这么做。
+
+### 如何 stopPropagation 或 preventDefault？
+
+:::warning[可能是你的 DOM 层级设计有问题]
+按钮一般来说不需要 `preventDefault`，但你把它放到了一个有 Click 事件的容器里，因此你会想 `stopPropagation`。这，很大情况，可以通过重新组织 DOM 层级的形式进行避免，比如通过绝对定位的方式。
+:::
+
+是的，`onClick` 变成了无参方法，那要如何 `e.stopPropagation()`、`e.preventDefault()` 呢？
+
+有两个方法：
+
+1. 使用新增的 `props.clickStop` 和 `props.clickPrevent`
+2. 在外层多套一个容器，在容器的 `onClick` 做

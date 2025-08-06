@@ -1,0 +1,11 @@
+{
+  "extends": "@kcuf/ts-config/index.json",
+  "include": [
+    "template-*/**/src",
+    "template-*/**/.storybook",
+    "template-*/**/stories",
+    "template-*/**/test",
+    "template-*/**/*.config.ts",
+    "script"
+  ]
+}
