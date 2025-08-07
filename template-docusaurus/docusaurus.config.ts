@@ -13,7 +13,7 @@ import {
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 export default {
-  title: 'MyDoc',
+  title: 'MyProject',
   tagline: 'Dinosaurs are cool',
   favicon: 'favicon.ico',
   url: 'https://your-docusaurus-site.example.com', // Set the production url of your site here
@@ -28,7 +28,7 @@ export default {
   
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'MyOrg', // Usually your GitHub org/user name
+  organizationName: 'MyOrg', // Usually your GitHub org/username
   projectName: 'MyProject', // Usually your repo name
   
   plugins: [
@@ -100,7 +100,7 @@ export default {
   themeConfig: {
     // image: 'img/social-card.jpg', // Project's social card
     navbar: {
-      title: 'MyDoc',
+      title: 'MyProject',
       logo: {
         alt: 'Logo',
         src: '/img/logo.png'
@@ -132,42 +132,42 @@ export default {
       }, {
         position: 'right',
         className: 'header-github-link',
-        href: 'https://github.com/facebook/docusaurus',
+        href: 'https://github.com/justnewbee/templates/tree/main/template-docusaurus',
         'aria-label': 'GitHub repository'
       }]
     },
     
     footer: {
       style: 'dark',
-      links: [{
-        title: 'Docs',
-        items: [{
-          label: 'Tutorial',
-          to: '/docs/tutor'
-        }]
-      }, {
-        title: 'Community',
-        items: [{
-          label: 'Stack Overflow',
-          href: 'https://stackoverflow.com/questions/tagged/docusaurus'
-        }, {
-          label: 'Discord',
-          href: 'https://discordapp.com/invite/docusaurus'
-        }, {
-          label: 'X',
-          href: 'https://x.com/docusaurus'
-        }]
-      }, {
-        title: 'More',
-        items: [{
-          label: 'Blog',
-          to: '/blog'
-        }, {
-          label: 'GitHub',
-          href: 'https://github.com/facebook/docusaurus'
-        }]
-      }],
-      copyright: `Copyright &copy; ${new Date().getFullYear()} MyProject, Inc. Built with Docusaurus.`
+      // links: [{
+      //   title: 'Docs',
+      //   items: [{
+      //     label: 'Tutorial',
+      //     to: '/docs/tutor'
+      //   }]
+      // }, {
+      //   title: 'Community',
+      //   items: [{
+      //     label: 'Stack Overflow',
+      //     href: 'https://stackoverflow.com/questions/tagged/docusaurus'
+      //   }, {
+      //     label: 'Discord',
+      //     href: 'https://discordapp.com/invite/docusaurus'
+      //   }, {
+      //     label: 'X',
+      //     href: 'https://x.com/docusaurus'
+      //   }]
+      // }, {
+      //   title: 'More',
+      //   items: [{
+      //     label: 'Blog',
+      //     to: '/blog'
+      //   }, {
+      //     label: 'GitHub',
+      //     href: 'https://github.com/facebook/docusaurus'
+      //   }]
+      // }],
+      copyright: `Copyright &copy; ${new Date().getFullYear()} MyOrg, Inc. Built with Docusaurus.`
     },
     
     prism: {

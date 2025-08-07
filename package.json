@@ -46,7 +46,7 @@
     "ncu:main": "ncu --registry https://registry.npmmirror.com",
     "ncu:packages": "pnpm -r exec ncu --registry https://registry.npmmirror.com",
     "depcheck": "depcheck",
-    "depcheck:packages": "pnpm -r --no-bail --filter '!web' exec depcheck",
+    "depcheck:packages": "pnpm -r --no-bail --filter '!template-docusaurus' exec depcheck",
     "lint": "eslint packages*/*/src/ --ext js,ts,tsx",
     "lint:style": "stylelint \"**/src/**/*.{css,less,ts,tsx}\"",
     "lint:md": "markdownlint-cli2 **/*.md !node_modules"
