@@ -32,3 +32,7 @@
 ## 部署
 
 > 是项目具体情况而定。
+
+## Credits
+
+* Logo from [FlatIcon](https://www.flaticon.com/free-icon/book_19007760?term=book&page=1&position=72&origin=search&related_id=19007760)
