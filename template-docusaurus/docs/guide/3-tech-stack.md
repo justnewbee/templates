@@ -2,39 +2,9 @@
 title: 技术选型
 ---
 
-基于项目需求、团队技术储备以及技术生态等因素考量，从 **开发** 和 **工程** 两个维度确定了适用的技术选型。
+基于项目需求、团队技术储备以及技术生态等因素考量，从 **工程** 和 **编程** 两个维度确定了适用的技术选型。
 
-## 开发相关 {#dev}
-
-### TypeScript - 编程语言 {#typescript}
-
-> TS 不止是一门编程语言，它是帮助我们理清思路的工具，**无 TS 不要写代码**。
-
-* 官网：[TypeScript](https://www.typescriptlang.org)
-* 原因：作为 JavaScript 的超集，TypeScript 提供了静态类型检测，能在开发期间（而不是运行期间）第一时间发现程序错误，并且类型定义
-
-### React - 组件框架 {#react}
-
-> 严格来说 React 是「库」，不是「框架」，请熟练使用 Hook。
-
-* 官网：[React](https://react.dev)
-* 原因：我们的技术栈用的都是 React，包括三方的组件库和自研的组件
-
-### ReactRouter - 路由管理 {#react-router}
-
-> 应用必需有路由，请熟练使用 Hook。
-
-* 官网：[ReactRouter](https://reactrouter.com)
-* 原因：React 应用下，路由管理的不二之选
-
-### StyledComponents - CSS-in-JS {#styled-components}
-
-> 我唯一认可的 CSS-in-JS 解决方案。
-
-* 官网：[styled-components](https://styled-components.com)
-* 原因：CSS-in-JS 的好处是，封装组件无后顾之忧，且我们提供了基于 styled-components 的 mixin 包，以帮助简化开发
-
-## 工程相关 {#engeer}
+## 工程 {#engeering}
 
 ### Pnpm - 包管理工具 {#pnpm}
 
@@ -65,14 +35,14 @@ title: 技术选型
 
 更多内容，可以看看 [《你的前端工程，二哈和它的朋友们都安排上了么？》](https://juejin.cn/post/7278994237949444136)。
 
-### Ncu - NPM 版本检测及升级功能
+### Ncu - NPM 版本更新 {#ncu}
 
 > 保证整个 Workspace 下的包都紧跟时代步伐，让思想不要落伍。
 
 * 官网：[npm - npm-check-updates](https://www.npmjs.com/package/npm-check-updates)
 * 原因：跟进社区动态，第一时间了解依赖的更新，保证项目活力
 
-### Depcheck
+### Depcheck - 依赖检测 {#depcheck}
 
 > 包健康，项目才会健康。
 
@@ -118,6 +88,36 @@ title: 技术选型
 * 原因：可能不是最强大，但绝对最好用的基于 React 和 MDX 的静态站点生成工具
 
 更多内容，可以看看 [《入坑 Docusaurus，看这一篇就够了》](https://juejin.cn/post/7518188007541489704)。
+
+## 编程 {#coding}
+
+### TypeScript - 编程语言 {#typescript}
+
+> TS 不止是一门编程语言，它是帮助我们理清思路的工具，**无 TS 不要写代码**。
+
+* 官网：[TypeScript](https://www.typescriptlang.org)
+* 原因：作为 JavaScript 的超集，TypeScript 提供了静态类型检测，能在开发期间（而不是运行期间）第一时间发现程序错误，并且类型定义
+
+### React - 组件框架 {#react}
+
+> 严格来说 React 是「库」，不是「框架」，请熟练使用 Hook。
+
+* 官网：[React](https://react.dev)
+* 原因：我们的技术栈用的都是 React，包括三方的组件库和自研的组件
+
+### ReactRouter - 路由管理 {#react-router}
+
+> 应用必需有路由，请熟练使用 Hook。
+
+* 官网：[ReactRouter](https://reactrouter.com)
+* 原因：React 应用下，路由管理的不二之选
+
+### StyledComponents - CSS-in-JS {#styled-components}
+
+> 我唯一认可的 CSS-in-JS 解决方案。
+
+* 官网：[styled-components](https://styled-components.com)
+* 原因：CSS-in-JS 的好处是，封装组件无后顾之忧，且我们提供了基于 styled-components 的 mixin 包，以帮助简化开发
 
 ## FAQ
 

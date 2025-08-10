@@ -98,7 +98,7 @@ export default {
   ],
   
   themeConfig: {
-    // image: 'img/social-card.jpg', // Project's social card
+    image: 'img/social-card.jpg', // Project's social card
     navbar: {
       title: 'MyProject',
       logo: {
