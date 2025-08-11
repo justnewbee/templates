@@ -10,7 +10,7 @@ sidebar_position: 1
 ## 设计资产
 
 | 名称 | 使用场景 | 预览 |
-| --- | --- | :-: |
+| --- | --- | --: |
 | 图标 | FavIcon、应用图标、链接 | ![Icon](/favicon.ico) |
 | Logo | 网站 Logo | ![Logo](/img/logo.png) |
 | Social Card | Social Card | ![Logo](/img/social-card.jpg) |

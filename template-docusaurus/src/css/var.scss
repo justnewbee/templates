@@ -15,7 +15,7 @@
   --ifm-color-primary-light: hsl(245 73% 68%);
   --ifm-color-primary-lighter: hsl(245 73% 71%);
   --ifm-color-primary-lightest: hsl(245 74% 80%);
-  --ifm-code-font-size: 0.77rem;
+  --ifm-code-font-size: 0.9em;
   --ifm-code-border-radius: 4px;
   --ifm-code-padding-horizontal: 0.4rem;
   --ifm-code-padding-vertical: 0.2rem;
@@ -36,10 +36,10 @@
   --ifm-table-row-background-hover: hsl(223 79% 60% / 4%);
   --ifm-alert-padding-vertical: 0.6rem;
   
-  /* 一些专属自定义，以 --k- 打头 */
-  --k-color-keyword: hsl(255 67% 55%);
-  --k-color-string: hsl(209 75% 38%);
-  --k-color-compoent: hsl(17 87% 45%);
+  /* 一些专属自定义，以 --x- 打头 */
+  --x-color-keyword: hsl(255 67% 55%);
+  --x-color-string: hsl(209 75% 38%);
+  --x-color-compoent: hsl(17 87% 45%);
 }
 
 html[data-theme="dark"] {
@@ -49,8 +49,8 @@ html[data-theme="dark"] {
   --ifm-table-stripe-background: none;
   --ifm-table-row-background-hover: hsl(0 0% 100% / 7%);
   
-  /* 一些专属自定义，以 --k- 打头 */
-  --k-color-keyword: hsl(255 94% 79%);
-  --k-color-string: hsl(131 50% 50%);
-  --k-color-compoent: hsl(29 100% 58%);
+  /* 一些专属自定义，以 --x- 打头 */
+  --x-color-keyword: hsl(255 94% 79%);
+  --x-color-string: hsl(131 50% 50%);
+  --x-color-compoent: hsl(29 100% 58%);
 }

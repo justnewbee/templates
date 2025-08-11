@@ -31,6 +31,7 @@
     "@babel/preset-typescript": "^7.27.1",
     "@kcuf/ts-config": "^0.0.1",
     "@types/react": "^18.3.23",
+    "cross-env": "^10.0.0",
     "react": "^18.3.1",
     "rimraf": "^6.0.1",
     "typescript": "^5.9.2"
@@ -45,8 +46,8 @@
   },
   "scripts": {
     "build:clean": "rimraf dist",
-    "build:esm": "ESM=1 babel src -d dist/esm --extensions .ts,.tsx --source-maps",
-    "build:cjs": "ESM=0 babel src -d dist/cjs --extensions .ts,.tsx",
+    "build:esm": "cross-env ESM=1 babel src -d dist/esm --extensions .ts,.tsx --source-maps",
+    "build:cjs": "cross-env ESM=0 babel src -d dist/cjs --extensions .ts,.tsx",
     "build:types": "tsc -rootDir src --outDir dist/types --declaration --noEmit false --emitDeclarationOnly --isolatedModules false",
     "build": "pnpm build:esm && pnpm build:cjs && pnpm build:types",
     "watch": "pnpm build:esm -w",

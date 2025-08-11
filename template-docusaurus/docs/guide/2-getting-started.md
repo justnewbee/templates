@@ -26,7 +26,7 @@ brew install node # 推荐使用 brew 安装 node，若没有可以用别的方�
 npm install -g pnpm
 ```
 
-## 所有 npm scripts 说明
+## 主应用的 Npm Scripts
 
 :::tip[小技巧]
 建议用 `pnpm` 运行，不需要写 `run`。若当前路径在某子目录下，加上参数 `-w` 即可，不需要切回根目录。
@@ -34,7 +34,8 @@ npm install -g pnpm
 
 | 名称 | 内容 | 说明 |
 | --- | --- | --- |
-| `prepare` | `husky` | 生命周期 script，`pnpm install` 后自动执行，这里用于初始化 `husky` |
+| `preinstall` | `npx only-allow pnpm` | 生命周期，`pnpm install` 前自动执行，这里用于限制仅允许使用 Pnpm 作为包管理器 |
+| `prepare` | `husky` | 生命周期，`pnpm install` 后自动执行，这里用于初始化 `husky` |
 | `boot` | `pnpm clean && pnpm i` | 初始化项目 🚨 只要有依赖更新，就需要手动执行，因此你需要经常执行这个命令 |
 | `boot:packages` | `pnpm -r prepublishOnly` | 构建 Workspace 下所有 package，本地开发包的时候必需 |
 | `start` | `vite` | 本地开发 |
@@ -48,3 +49,17 @@ npm install -g pnpm
 | `ncu:packages` | `pnpm -r exec ncu` | 更新包的依赖 |
 | `depcheck` | `depcheck` | 检查主项目依赖项是否有缺失或多余 |
 | `depcheck:packages` | `pnpm -r --no-bail exec depcheck` | 检查包的依赖项是否有缺失或多余 |
+
+## Package 的 Npm Scripts
+
+| 名称 | 内容 | 说明 |
+| --- | --- | --- |
+| `start` | `storybook dev -p 6006` | 运行 Storybook |
+| `build:clean` | `rimraf dist` | 删除构建产物 |
+| `build:esm` | `cross-env ESM=1 babel src -d dist/esm --extensions .ts,.tsx --source-maps` | 构建 ESM 产物到 `dist/esm` |
+| `build:cjs` | `cross-env ESM=0 babel src -d dist/cjs --extensions .ts,.tsx` | 构建 CJS 产物到 `dist/esm` |
+| `build:types` | `tsc -rootDir src --outDir dist/types --declaration --noEmit false --emitDeclarationOnly --isolatedModules false` | 构建类型产物到 `dist/types` |
+| `build:sb` | `storybook build` | 构建 Storybook |
+| `build` | `pnpm build:esm && pnpm build:cjs && pnpm build:types` | 构建 |
+| `watch` | `pnpm build:esm -w` | 监测 `src` 下的改动，若有变化，则执行构建 ESM 的命令 |
+| `prepublishOnly` | `pnpm build:clean && pnpm buil` | 声明周期，发包时自动执行所有的构建 |
