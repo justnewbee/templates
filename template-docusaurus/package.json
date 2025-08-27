@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.8.1",
+    "@docusaurus/plugin-content-docs": "^3.8.1",
     "@docusaurus/theme-live-codeblock": "^3.8.1",
     "@docusaurus/tsconfig": "^3.8.1",
     "@docusaurus/types": "^3.8.1",
@@ -41,13 +42,13 @@
     "@types/react-dom": "^18.3.7",
     "commander": "^14.0.0",
     "docusaurus-plugin-sass": "^0.2.6",
-    "inquirer": "^12.9.1",
-    "react-docgen": "^8.0.0",
+    "inquirer": "^12.9.4",
+    "react-docgen": "^8.0.1",
     "react-docgen-typescript": "^2.4.0",
-    "sass": "^1.90.0",
+    "sass": "^1.91.0",
     "ts-node-dev": "^2.0.0",
-    "typedoc": "^0.28.10",
-    "typedoc-plugin-markdown": "^4.8.0",
+    "typedoc": "^0.28.11",
+    "typedoc-plugin-markdown": "^4.8.1",
     "typescript": "^5.9.2"
   },
   "dependencies": {
