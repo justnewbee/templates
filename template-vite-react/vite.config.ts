@@ -24,7 +24,28 @@ export default defineConfig({
     host: '0.0.0.0'
   },
   build: {
-    // target: 'es2022',
-    sourcemap: false
+    // outDir: 'dist',
+    // assetsDir: 'assets',
+    // emptyOutDir: true,
+    // chunkSizeWarningLimit: 500,
+    cssCodeSplit: false,
+    rollupOptions: {
+      input: 'index.html',
+      output: {
+        entryFileNames: 'index.js',
+        manualChunks: {
+          // 'vendor-lodash': ['lodash'],
+          'vendor-react': ['react', 'react-dom', 'react-router', 'styled-components']
+        },
+        chunkFileNames: 'chunks/[name]-[hash].js',
+        assetFileNames: assetInfo => {
+          if (assetInfo.names[assetInfo.names.length - 1]?.endsWith('.css')) {
+            return 'index.css';
+          }
+          
+          return 'assets/[name]-[hash][extname]';
+        }
+      }
+    }
   }
 });
