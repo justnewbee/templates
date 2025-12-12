@@ -1,15 +1,25 @@
 ignores: [
+  # basic
+  "cross-env",
+  "rimraf",
+  "ts-node",
+  "@tsconfig/node22",
+  "@types/node",
+  # linters
   "eslint-*",
   "stylelint",
   "stylelint-*",
-  "ts-node",
-  "lerna",
-  "rimraf",
-  "@babel/*",
-  "@storybook/*",
+  "lint-staged",
+  "npm-package-json-lint",
   "@commitlint/*",
   "markdownlint-cli2",
+  # config
   "@kcuf/*-config",
+  # build
+  "@babel/*",
+  "lerna",
+  # test
+  "@storybook/*",
   "@chromatic-com/storybook",
   "@vitest/coverage-v8"
 ]

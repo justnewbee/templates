@@ -1,11 +1,8 @@
 import {
-  ReactElement,
-  forwardRef
+  ReactElement
 } from 'react';
 
-import IconBase, {
-  IconBaseRef
-} from '@kcuf-ui/rc-icon-base';
+import IconBase from '@kcuf-ui/icon-base';
 
 import {
   TIconType,
@@ -20,19 +17,9 @@ import {
   getIconColorDark
 } from './util';
 
-/**
- * ConsoleBase 项目自用的图标组件
- */
-function Icon(props: IIconProps, ref: IconBaseRef): ReactElement {
-  const {
-    type,
-    ...restProps
-  } = props;
-  
+export default function Icon(props: IIconProps): ReactElement {
   return <IconBase<TIconType> {...{
-    ...restProps,
-    ref,
-    type,
+    ...props,
     fontFamily: ICON_FONT,
     darkThemePrefix: 'html[data-theme="dark"]',
     getIconCode,
@@ -41,10 +28,7 @@ function Icon(props: IIconProps, ref: IconBaseRef): ReactElement {
   }} />;
 }
 
-export default forwardRef(Icon);
-
 export type {
-  IconBaseRef as IconRef,
   IIconProps as IconProps,
   TIconType as IconType
 };

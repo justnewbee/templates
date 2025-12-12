@@ -4,7 +4,4 @@ format: group
 timeout: 120000
 # target: semver
 reject:
-  - '@types/react' # react 先维持 18 一段时间
-  - '@types/react-dom'
-  - 'react'
-  - 'react-dom'
+  - 'immer' # TODO up 11
